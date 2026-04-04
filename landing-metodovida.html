@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Método VIDA — Entiende tu cuerpo. Optimiza tus procesos. Mejora tu vida.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --azul-900: #021f47;   /* más oscuro */
+      --azul:     #053678;   /* principal */
+      --azul-700: #0a4fa8;   /* medio */
+      --azul-500: #1a6dd4;   /* claro-medio */
+      --azul-300: #5a9de8;   /* claro */
+      --azul-100: #ddeaf8;   /* muy claro */
+      --azul-50:  #f0f6ff;   /* casi blanco */
+      --blanco:   #FFFFFF;
+      --texto:    #e8f0fc;
+      --muted:    rgba(255,255,255,0.55);
+      --fuente-titulo: 'Bebas Neue', sans-serif;
+      --fuente-cuerpo: 'DM Sans', sans-serif;
+      --radio: 14px;
+      --max: 1100px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--fuente-cuerpo);
+      color: var(--texto);
+      /* FONDO PRINCIPAL: gradiente radial suave desde el centro */
+      background:
+        radial-gradient(ellipse at 60% 20%, rgba(26,109,212,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 75%, rgba(2,31,71,0.6) 0%, transparent 50%),
+        var(--azul);
+      background-attachment: fixed;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .contenedor { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+    .seccion { padding: 88px 0; }
+    .centrado { text-align: center; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(2, 28, 60, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    nav .contenedor { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: var(--fuente-titulo); font-size: 30px; color: var(--blanco); letter-spacing: 3px; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.65); text-decoration: none;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blanco); }
+
+    /* HERO */
+    .hero {
+      min-height: 92vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-contenido { position: relative; z-index: 2; max-width: 680px; }
+
+    .etiqueta {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.85);
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; padding: 7px 18px;
+      border-radius: 40px; margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(52px, 9vw, 108px);
+      line-height: 0.95; color: var(--blanco);
+      letter-spacing: 2px; margin-bottom: 28px;
+    }
+    .hero h1 em {
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.5);
+      font-style: normal;
+    }
+    .hero p {
+      font-size: 17px; color: var(--muted);
+      max-width: 500px; margin-bottom: 44px; line-height: 1.8;
+    }
+    .grupo-botones { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* BOTONES */
+    .btn {
+      display: inline-block; padding: 15px 36px;
+      border-radius: var(--radio); font-family: var(--fuente-cuerpo);
+      font-size: 15px; font-weight: 700; text-decoration: none;
+      cursor: pointer; border: none;
+      transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-solido {
+      background: var(--blanco);
+      color: var(--azul);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    .btn-solido:hover { background: var(--azul-50); box-shadow: 0 8px 28px rgba(0,0,0,0.3); }
+
+    .btn-glass {
+      background: rgba(255,255,255,0.1);
+      color: var(--blanco);
+      border: 1px solid rgba(255,255,255,0.25) !important;
+    }
+    .btn-glass:hover { background: rgba(255,255,255,0.18); }
+
+    /* TICKER */
+    .ticker-bar {
+      background: rgba(2, 28, 60, 0.5);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .ticker-track {
+      display: flex; white-space: nowrap;
+      animation: slide 34s linear infinite;
+      padding: 16px 0;
+    }
+    .ticker-track span {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      padding: 0 28px;
+    }
+    .ticker-track span::after { content: '·'; margin-left: 28px; opacity: 0.3; }
+    @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* PILARES — tarjetas estilo primera versión */
+    .titulo-seccion {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(38px, 5vw, 60px);
+      letter-spacing: 2px; line-height: 1.0; margin-bottom: 16px;
+      color: var(--blanco);
+    }
+    .subtitulo-seccion {
+      font-size: 17px; color: var(--muted);
+      max-width: 560px; margin: 0 auto; line-height: 1.7;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 56px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radio);
+      padding: 36px 28px;
+      transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .card:hover {
+      background: rgba(255,255,255,0.11);
+      border-color: rgba(255,255,255,0.28);
+      transform: translateY(-5px);
+    }
+
+    .card-icono {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 22px;
+    }
+    .card h3 {
+      font-family: var(--fuente-titulo);
+      font-size: 26px; letter-spacing: 2px;
+      color: var(--blanco); margin-bottom: 12px;
+    }
+    .card p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+
+    /* SPLIT IMAGEN + TEXTO */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center;
+    }
+    .foto-placeholder {
+      border-radius: 16px; aspect-ratio: 4/5;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 14px;
+    }
+
+    .cita-bloque {
+      border-left: 3px solid rgba(255,255,255,0.3);
+      padding: 18px 24px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 0 var(--radio) var(--radio) 0;
+      margin: 28px 0 32px;
+    }
+    .cita-bloque p { font-size: 18px; line-height: 1.65; color: rgba(255,255,255,0.85); font-style: italic; }
+    .cita-bloque span { font-size: 13px; color: var(--muted); font-style: normal; display: block; margin-top: 8px; }
+
+    /* PROGRAMAS */
+    .programas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; margin-top: 56px;
+    }
+    .programa {
+      border-radius: var(--radio); overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .programa:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.09);
+    }
+    .programa-header {
+      background: rgba(2,28,60,0.5);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 28px 28px 22px;
+    }
+    .programa-semanas {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--azul-300); margin-bottom: 8px;
+    }
+    .programa-nombre {
+      font-family: var(--fuente-titulo);
+      font-size: 32px; letter-spacing: 2px; color: var(--blanco);
+    }
+    .programa-body { padding: 28px; }
+    .programa-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
+    .programa-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 40px;
+    }
+
+    /* VALORES */
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px; margin-top: 56px;
+    }
+    .valor {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radio); padding: 26px 22px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .valor:hover {
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
+    }
+    .valor-num {
+      font-family: var(--fuente-titulo); font-size: 44px; line-height: 1;
+      color: rgba(255,255,255,0.2); flex-shrink: 0; width: 48px;
+    }
+    .valor h4 { font-size: 15px; font-weight: 700; color: var(--blanco); margin-bottom: 6px; }
+    .valor p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* CTA FINAL */
+    .cta-bloque {
+      background: rgba(2,28,60,0.6);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px; padding: 72px 48px;
+      text-align: center; max-width: 820px; margin: 0 auto;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .cta-bloque h2 {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(40px, 5vw, 66px); color: var(--blanco);
+      letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .cta-bloque p {
+      font-size: 17px; color: var(--muted); margin-bottom: 40px;
+      line-height: 1.7; max-width: 520px;
+      margin-left: auto; margin-right: auto;
+    }
+
+    footer {
+      background: rgba(2,20,50,0.7);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.35);
+      text-align: center; padding: 36px 24px; font-size: 13px;
+    }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--blanco); }
+
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .hero { min-height: 80vh; }
+      .split-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="contenedor">
+      <div class="logo">MÉTODO VIDA</div>
+      <ul class="nav-links">
+        <li><a href="#pilares">El método</a></li>
+        <li><a href="#programas">Programas</a></li>
+        <li><a href="#cta">Empezar</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="contenedor">
+      <div class="hero-contenido">
+        <span class="etiqueta">Basado en ciencia · Sin extremos</span>
+        <h1>
+          ENTIENDE<br />
+          TU <em>CUERPO.</em><br />
+          MEJORA<br />
+          TU VIDA.
+        </h1>
+        <p>
+          Un método integral que une entrenamiento, nutrición y hábitos 
+          para lograr resultados reales y duraderos. Sin restricciones extremas, 
+          sin fórmulas vacías.
+        </p>
+        <div class="grupo-botones">
+          <a href="#cta" class="btn btn-solido">Quiero empezar</a>
+          <a href="#pilares" class="btn btn-glass">Ver el método</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-bar">
+    <div class="ticker-track">
+      <span>Ciencia antes que tendencias</span>
+      <span>Equilibrio antes que extremos</span>
+      <span>Comprensión antes que obediencia</span>
+      <span>Bienestar sostenible</span>
+      <span>Constancia antes que intensidad</span>
+      <span>Apariencia saludable</span>
+      <span>Ciencia antes que tendencias</span>
+      <span>Equilibrio antes que extremos</span>
+      <span>Comprensión antes que obediencia</span>
+      <span>Bienestar sostenible</span>
+      <span>Constancia antes que intensidad</span>
+      <span>Apariencia saludable</span>
+    </div>
+  </div>
+
+  <!-- PILARES -->
+  <section class="seccion" id="pilares">
+    <div class="contenedor centrado">
+      <h2 class="titulo-seccion">LOS 4 PILARES DEL MÉTODO</h2>
+      <p class="subtitulo-seccion">
+        Cada letra de <strong style="color:rgba(255,255,255,0.85);">VIDA</strong> es una dimensión real de tu cuerpo y mente. No puedes optimizar una sin considerar las demás.
+      </p>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icono">⚡</div>
+          <h3>Vitalidad</h3>
+          <p>Energía, recuperación, sueño y regulación interna. La base fisiológica de todo. Tu cuerpo necesita funcionar bien antes de exigirle más.</p>
+        </div>
+        <div class="card">
+          <div class="card-icono">🧠</div>
+          <h3>Identidad</h3>
+          <p>Percepción, motivación y consistencia. Lo que piensas de tu cuerpo determina cómo te comportas con él. La mentalidad es parte del método.</p>
+        </div>
+        <div class="card">
+          <div class="card-icono">🏋️</div>
+          <h3>Desempeño</h3>
+          <p>Fuerza, movimiento y capacidad física. Entrenamiento periodizado con propósito. No se trata de sudar más, sino de progresar de forma inteligente.</p>
+        </div>
+        <div class="card">
+          <div class="card-icono">✦</div>
+          <h3>Apariencia</h3>
+          <p>La estética como consecuencia de procesos en equilibrio. Composición corporal real, no solo el número en la balanza.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGEN + TEXTO -->
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="split-grid">
+        <div class="foto-placeholder">
+          <!-- Reemplaza con: <img src="tu-foto.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:16px;" /> -->
+          <span style="font-size:48px;opacity:0.2;">📷</span>
+          <span style="font-size:13px;opacity:0.35;">Tu foto aquí</span>
+        </div>
+        <div>
+          <span class="etiqueta">El enfoque</span>
+          <h2 class="titulo-seccion" style="margin-top:20px;">
+            CIENCIA AL SERVICIO<br />DE TU CUERPO
+          </h2>
+          <div class="cita-bloque">
+            <p>"Entiende tu cuerpo. Optimiza tus procesos. Mejora tu vida."</p>
+            <span>— Frase núcleo del Método VIDA</span>
+          </div>
+          <p style="font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:16px;">
+            Soy entrenador personal certificado NASM, especialista en ejercicio correctivo y coach nutricional. 
+            Mi enfoque integra la evidencia científica con la practicidad del día a día.
+          </p>
+          <p style="font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:36px;">
+            No vendo sufrimiento ni promesas vacías. El método VIDA es un sistema que se adapta a ti, no al revés.
+          </p>
+          <a href="#cta" class="btn btn-solido">Agendar consulta diagnóstica</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMAS -->
+  <section class="seccion centrado" id="programas">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">PROGRAMAS DISPONIBLES</h2>
+      <p class="subtitulo-seccion">Programas de duración fija, con objetivos claros y acompañamiento estructurado.</p>
+      <div class="programas-grid">
+        <div class="programa">
+          <div class="programa-header">
+            <div class="programa-semanas">8 semanas</div>
+            <div class="programa-nombre">VIDA CORRECCIÓN</div>
+          </div>
+          <div class="programa-body">
+            <p class="programa-desc">Corrección postural, activación y reeducación del movimiento. Ideal si tienes dolores, lesiones o malos patrones de movimiento.</p>
+            <span class="programa-tag">Corrección postural</span>
+          </div>
+        </div>
+        <div class="programa" style="border-color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.09);">
+          <div class="programa-header" style="background:rgba(255,255,255,0.08);">
+            <div class="programa-semanas">12 semanas</div>
+            <div class="programa-nombre">VIDA FORMA</div>
+          </div>
+          <div class="programa-body">
+            <p class="programa-desc">Composición corporal como objetivo central. Nutrición, entrenamiento y hábitos integrados para cambiar tu cuerpo de forma sostenida.</p>
+            <span class="programa-tag">Composición corporal</span>
+          </div>
+        </div>
+        <div class="programa">
+          <div class="programa-header">
+            <div class="programa-semanas">16 semanas</div>
+            <div class="programa-nombre">VIDA ESTRUCTURA</div>
+          </div>
+          <div class="programa-body">
+            <p class="programa-desc">El programa más completo. Fuerza progresiva, recomposición corporal y consolidación de hábitos a largo plazo.</p>
+            <span class="programa-tag">Fuerza y recomposición</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALORES -->
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="centrado">
+        <h2 class="titulo-seccion">LO QUE NOS DIFERENCIA</h2>
+        <p class="subtitulo-seccion">No son slogans. Son los principios que guían cada decisión del método.</p>
+      </div>
+      <div class="valores-grid">
+        <div class="valor">
+          <div class="valor-num">01</div>
+          <div><h4>Ciencia antes que tendencias</h4><p>Cada protocolo tiene respaldo en evidencia. No seguimos modas ni vendemos atajos.</p></div>
+        </div>
+        <div class="valor">
+          <div class="valor-num">02</div>
+          <div><h4>Equilibrio antes que extremos</h4><p>Las restricciones irracionales no funcionan a largo plazo. El equilibrio sí.</p></div>
+        </div>
+        <div class="valor">
+          <div class="valor-num">03</div>
+          <div><h4>Comprensión antes que obediencia</h4><p>Quiero que entiendas por qué haces cada cosa, no que solo sigas instrucciones.</p></div>
+        </div>
+        <div class="valor">
+          <div class="valor-num">04</div>
+          <div><h4>Bienestar sostenible</h4><p>Los resultados que duran son los que se construyen sin sacrificar la vida en el proceso.</p></div>
+        </div>
+        <div class="valor">
+          <div class="valor-num">05</div>
+          <div><h4>Apariencia saludable</h4><p>La estética que refleja salud real, no la que se obtiene a cualquier costo.</p></div>
+        </div>
+        <div class="valor">
+          <div class="valor-num">06</div>
+          <div><h4>Constancia antes que intensidad</h4><p>Un hábito moderado repetido en el tiempo supera cualquier semana de esfuerzo extremo.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="seccion" id="cta">
+    <div class="contenedor">
+      <div class="cta-bloque">
+        <h2>¿LISTO PARA EMPEZAR?</h2>
+        <p>
+          Agenda una consulta diagnóstica gratuita de 30 minutos. Sin compromiso. 
+          Analizamos tu situación y te digo honestamente si el método es para ti.
+        </p>
+        <a href="https://wa.me/56912345678?text=Hola,%20quiero%20agendar%20una%20consulta%20diagnóstica%20con%20Método%20VIDA" class="btn btn-solido">
+          Agendar por WhatsApp →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 <strong style="color:rgba(255,255,255,0.7);">Método VIDA</strong> — Todos los derechos reservados.</p>
+    <p style="margin-top:8px;">
+      <a href="https://instagram.com/metodovida.fit">@metodovida.fit</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:contacto@metodovida.fit">contacto@metodovida.fit</a>
+    </p>
+    <p style="margin-top:14px;font-size:11px;opacity:0.3;letter-spacing:2px;text-transform:uppercase;">
+      Ciencia · Equilibrio · Comprensión
+    </p>
+  </footer>
+
+</body>
+</html>
